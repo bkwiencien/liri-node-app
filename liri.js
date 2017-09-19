@@ -13,7 +13,7 @@ switch (process.argv[2]) {
       getMyTweets();
       break;
     case 'spotify-this-song':
-      getMeSpotifyStuff(process.argv[3]);
+      getSpotifyStuff(process.argv[3]);
       break;
     case 'movie-this':
       getMovieStuff(process.argv[3]);
@@ -28,8 +28,21 @@ switch (process.argv[2]) {
   	console.log("in getMyTweets");
   }
   function getSpotifyStuff(songName){
+  	var songToUse = "";
   	console.log("in getSpotifyStuff");
+  	console.log("song name is " + songName);
+  	if (songName == undefined) {
+       songToUse = defaultSong
+  	} else {
+  		songToUse = songName;
+  	}
+  	console.log("sogToUse = " + songToUse);
   }
-  function getMovieStuff(maveNAme) {
-  	console.log("in getMovieStuff");
+  function getMovieStuff(movieName) {
+  	var nameToUse = "";
+  	if (movieName == undefined) {
+  		nameToUse = defaultMovie;
+  	} else {
+  		nameToUse = movieName;
+  	}
   }
