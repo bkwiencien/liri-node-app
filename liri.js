@@ -19,7 +19,7 @@ switch (process.argv[2]) {
       getMovieStuff(process.argv[3]);
       break;
     case 'do-what-it-says':
-     // doWhatItSays();
+      doWhat();
       break;
     default:
       console.log("I cannot figure out what you want!");
@@ -36,7 +36,7 @@ switch (process.argv[2]) {
   	} else {
   		songToUse = songName;
   	}
-  	console.log("sogToUse = " + songToUse);
+  	console.log("songToUse = " + songToUse);
   }
   function getMovieStuff(movieName) {
   	var nameToUse = "";
@@ -45,4 +45,8 @@ switch (process.argv[2]) {
   	} else {
   		nameToUse = movieName;
   	}
+  	console.log("nameToUse = " + nameToUse);
+  }
+  function doWhat() {
+  	console.log("in doWhat");
   }
