@@ -59,4 +59,29 @@ switch (process.argv[2]) {
   }
   function doWhat() {
   	console.log("in doWhat");
-  }
+    fs.readFile('./random.txt', 'utf8', function (error, data) {
+    if (error) {
+      console.log('ERROR: Reading random.txt -- ' + error);
+      return;
+    } else {
+      // Split out the command name and the parameter name
+      var cmdString = data.split(',');
+      var command = cmdString[0].trim();
+      var p = cmdString[1].trim();
+
+      switch(command) {
+        case 'my-tweets':
+          getMyTweets(); 
+          break;
+
+        case 'spotify-this-song':
+          getSpotifyStuff(p);
+          break;
+
+        case 'movie-this':
+          getMovieStuff(p);
+          break;
+      }
+    }
+  });
+}
