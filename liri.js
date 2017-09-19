@@ -8,6 +8,16 @@ twitterAppName = "liri-node-app-bk";
 defaultMovie   = "Mr. Nobody";
 defaultSong    = "The Sign";
 console.log(keys);
+var writeLog = function(data) {
+  fs.appendFile("log.txt", '\n\n');
+  fs.appendFile("log.txt", JSON.stringify(data), function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("log.txt  updated!");
+  });
+}
+
 switch (process.argv[2]) {
     case 'my-tweets':
       getMyTweets();
