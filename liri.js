@@ -37,6 +37,7 @@ switch (process.argv[2]) {
       console.log("I cannot figure out what you want!");
   }
   function getMyTweets() {
+    var params = { screen_name: 'bkwiencien', count: 10 };
   	console.log("in getMyTweets");
   }
   var getNames = function(artist) {
