@@ -10,6 +10,7 @@ var spotifyAppName = "liri-node-app-bk";
 var twitterAppName = "liri-node-app-bk";
 var defaultMovie   = "Mr. Nobody";
 var defaultSong    = "The Sign";
+var whatIDid       = "";
 console.log(keys);
 var writeLog = function(data) {
   fs.appendFile("log.txt", '\n\n');
@@ -55,6 +56,8 @@ switch (process.argv[2]) {
             'Tweets: ' : tweets[i].text,
         });
       }
+      whatIDid = "node liri.js my-tweets"
+      writeLog(whatIDid);
       console.log(dd);
       writeLog(dd);
     } else {
@@ -97,6 +100,8 @@ switch (process.argv[2]) {
         'album: ': songs[i].album.name,
       });
     }
+    whatIDid = "node liri.js spotify-this-song " + process.argv[3];
+    wwriteLog(whatIDid);
     console.log(dodo);
     writeLog(dodo);
   });  
@@ -131,6 +136,8 @@ switch (process.argv[2]) {
       'Rotten Tomatoes Rating: ' : jsonData.tomatoRating,
       'Rotton Tomatoes URL: ' : jsonData.tomatoURL,
   });
+      whatIDid = "node liri.js movie-this " + process.argv[3];
+      writeLog(whatIDid);
       console.log(data);
       writeLog(data);
 }
