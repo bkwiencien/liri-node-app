@@ -159,6 +159,8 @@ switch (process.argv[2]) {
         case 'movie-this':
           getMovieStuff(p);
           break;
+        default:
+          console.log("it is s a mystery to me!");
       }
     }
   });
