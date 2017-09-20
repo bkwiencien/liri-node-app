@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bkwiencien/liri-node-app/issues"
   },
-  "homepage": "https://github.com/bkwiencien/liri-node-app#readme"
+  "homepage": "https://github.com/bkwiencien/liri-node-app#readme",
+  "dependencies": {
+    "request": "^2.82.0"
+  }
 }

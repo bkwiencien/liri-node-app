@@ -1,5 +1,6 @@
 var keys = require('./keys');
 var fs   = require('fs');
+var request = require('request');
 var omdbApiKey = "40e9cece";
 spotifyClientID = "d30b40453f4b4c91891565a41bb149e5";
 spotifyClientSecret = "8f425f8bee264d22ac9aa25b7d05d113";
@@ -50,12 +51,42 @@ switch (process.argv[2]) {
   }
   function getMovieStuff(movieName) {
   	var nameToUse = "";
+    var formattedName = "";
   	if (movieName == undefined) {
   		nameToUse = defaultMovie;
   	} else {
   		nameToUse = movieName;
   	}
-  	console.log("nameToUse = " + nameToUse);
+    formattedName = handleSpaces(nameToUse);
+    console.log("formattedName = " + formattedName);
+// the main logic
+  var urlHit = "http://www.omdbapi.com/?t=" + formattedName + "&y=&plot=full&tomatoes=true&r=json&apikey=40e9cece";
+
+  request(urlHit, function(error, response, body) {
+    console.log("after request error is "+error);
+    console.log("statusCode = " + response.statusCode);
+    console.log("body = " + body);
+    if (!error && response.statusCode == 200) {
+      var data = [];
+      var jsonData = JSON.parse(body);
+
+      data.push({
+      'Title: ' : jsonData.Title,
+      'Year: ' : jsonData.Year,
+      'Rated: ' : jsonData.Rated,
+      'IMDB Rating: ' : jsonData.imdbRating,
+      'Country: ' : jsonData.Country,
+      'Language: ' : jsonData.Language,
+      'Plot: ' : jsonData.Plot,
+      'Actors: ' : jsonData.Actors,
+      'Rotten Tomatoes Rating: ' : jsonData.tomatoRating,
+      'Rotton Tomatoes URL: ' : jsonData.tomatoURL,
+  });
+      console.log(data);
+      writeLog(data);
+}
+  });
+// end of main logic    
   }
   function doWhat() {
   	console.log("in doWhat");
@@ -64,7 +95,6 @@ switch (process.argv[2]) {
       console.log('ERROR: Reading random.txt -- ' + error);
       return;
     } else {
-      // Split out the command name and the parameter name
       var cmdString = data.split(',');
       var command = cmdString[0].trim();
       var p = cmdString[1].trim();
@@ -84,4 +114,16 @@ switch (process.argv[2]) {
       }
     }
   });
+}
+function handleSpaces(thing) {
+  var array = [];
+  var ret = "";
+  array = thing.split(" ");
+  for (j=0;j<array.length;j++){
+    ret = ret + array[j]+"+";   
+  }
+  console.log("ret = " + ret);
+  ret = ret.slice(0, -1);
+  return(ret);
+
 }
