@@ -1,14 +1,14 @@
 var keys = require('./keys');
 var fs   = require('fs');
 var request = require('request');
-var spotify = require('spotify');
+var Spotify = require('spotify');
 var omdbApiKey = "40e9cece";
-spotifyClientID = "d30b40453f4b4c91891565a41bb149e5";
-spotifyClientSecret = "8f425f8bee264d22ac9aa25b7d05d113";
-spotifyAppName = "liri-node-app-bk";
-twitterAppName = "liri-node-app-bk";
-defaultMovie   = "Mr. Nobody";
-defaultSong    = "The Sign";
+var spotifyClientID = "d30b40453f4b4c91891565a41bb149e5";
+var spotifyClientSecret = "8f425f8bee264d22ac9aa25b7d05d113";
+var spotifyAppName = "liri-node-app-bk";
+var twitterAppName = "liri-node-app-bk";
+var defaultMovie   = "Mr. Nobody";
+var defaultSong    = "The Sign";
 console.log(keys);
 var writeLog = function(data) {
   fs.appendFile("log.txt", '\n\n');
@@ -49,10 +49,32 @@ switch (process.argv[2]) {
   	} else {
   		songToUse = songName;
   	}
-    songFormatted = handleSpaces(songToUse);
-  	console.log("songToUse = " + songToUse);
-    console.log("songFormatted = " + songFormatted);
-  }
+    var Spotify = require('node-spotify-api');
+    spotify = new Spotify({
+       id: spotifyClientID,
+       secret: spotifyClientSecret
+    });
+    spotify.search({ type: 'track', query: songToUse }, function(err, data) {
+    console.log(data);
+    if (err) {
+      console.log('Error occurred: ' + err);
+      return;
+    }
+    var songs = data.tracks.items;
+    var dodo = []; 
+
+    for (var i = 0; i < songs.length; i++) {
+      dodo.push({
+       // 'artist(s)': songs[i].artists.map(getArtistNames),
+        'song name: ': songs[i].name,
+        'preview song: ': songs[i].preview_url,
+        'album: ': songs[i].album.name,
+      });
+    }
+    console.log(dodo);
+    writeToLog(dodo);
+  });  
+}
   function getMovieStuff(movieName) {
   	var nameToUse = "";
     var formattedName = "";
