@@ -40,6 +40,7 @@ switch (process.argv[2]) {
   }
   function getSpotifyStuff(songName){
   	var songToUse = "";
+    var songFormatted = "";
   	console.log("in getSpotifyStuff");
   	console.log("song name is " + songName);
   	if (songName == undefined) {
@@ -47,7 +48,9 @@ switch (process.argv[2]) {
   	} else {
   		songToUse = songName;
   	}
+    songFormatted = handleSpaces(songToUse);
   	console.log("songToUse = " + songToUse);
+    console.log("songFormatted = " + songFormatted);
   }
   function getMovieStuff(movieName) {
   	var nameToUse = "";
