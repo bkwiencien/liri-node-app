@@ -16,7 +16,6 @@ var writeLog = function(data) {
     if (err) {
       return console.log(err);
     }
-    console.log("log.txt  updated!");
   });
 }
 
@@ -39,6 +38,9 @@ switch (process.argv[2]) {
   function getMyTweets() {
   	console.log("in getMyTweets");
   }
+  var getNames = function(artist) {
+    return artist.name;
+  };
   function getSpotifyStuff(songName){
   	var songToUse = "";
     var songFormatted = "";
@@ -57,7 +59,7 @@ switch (process.argv[2]) {
     spotify.search({ type: 'track', query: songToUse }, function(err, data) {
     console.log(data);
     if (err) {
-      console.log('Error occurred: ' + err);
+      console.log('Error : ' + err);
       return;
     }
     var songs = data.tracks.items;
@@ -65,14 +67,14 @@ switch (process.argv[2]) {
 
     for (var i = 0; i < songs.length; i++) {
       dodo.push({
-       // 'artist(s)': songs[i].artists.map(getArtistNames),
+        'artist(s)': songs[i].artists.map(getNames),
         'song name: ': songs[i].name,
         'preview song: ': songs[i].preview_url,
         'album: ': songs[i].album.name,
       });
     }
     console.log(dodo);
-    writeToLog(dodo);
+    writeLog(dodo);
   });  
 }
   function getMovieStuff(movieName) {
@@ -89,9 +91,6 @@ switch (process.argv[2]) {
   var urlHit = "http://www.omdbapi.com/?t=" + formattedName + "&y=&plot=full&tomatoes=true&r=json&apikey=40e9cece";
 
   request(urlHit, function(error, response, body) {
-    console.log("after request error is "+error);
-    console.log("statusCode = " + response.statusCode);
-    console.log("body = " + body);
     if (!error && response.statusCode == 200) {
       var data = [];
       var jsonData = JSON.parse(body);
@@ -111,9 +110,8 @@ switch (process.argv[2]) {
       console.log(data);
       writeLog(data);
 }
-  });
-// end of main logic    
-  }
+  });  
+ }
   function doWhat() {
   	console.log("in doWhat");
     fs.readFile('./random.txt', 'utf8', function (error, data) {
