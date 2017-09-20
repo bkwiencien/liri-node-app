@@ -2,7 +2,7 @@ var keys = require('./keys');
 var fs   = require('fs');
 var request = require('request');
 var Spotify = require('spotify');
-var twitter = require('twitter');
+var Twitter = require('twitter');
 var omdbApiKey = "40e9cece";
 var spotifyClientID = "d30b40453f4b4c91891565a41bb149e5";
 var spotifyClientSecret = "8f425f8bee264d22ac9aa25b7d05d113";
@@ -38,7 +38,29 @@ switch (process.argv[2]) {
   }
   function getMyTweets() {
     var params = { screen_name: 'bkwiencien', count: 10 };
+    var client = new Twitter({
+      consumer_key: keys.consumer_key,
+      consumer_secret: keys.consumer_secret,
+      access_token_key: keys.access_token_key,
+      access_token_secret: keys.access_token_secret
+    });
   	console.log("in getMyTweets");
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+      var dd = []; 
+      console.log("there was no error");
+      for (var i = 0; i < tweets.length; i++) {
+        dd.push({
+            'created at: ' : tweets[i].created_at,
+            'Tweets: ' : tweets[i].text,
+        });
+      }
+      console.log(dd);
+      writeLog(dd);
+    } else {
+      console.log("error ");
+    }
+  });
   }
   var getNames = function(artist) {
     return artist.name;
