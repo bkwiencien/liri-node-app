@@ -101,7 +101,7 @@ switch (process.argv[2]) {
       });
     }
     whatIDid = "node liri.js spotify-this-song " + process.argv[3];
-    wwriteLog(whatIDid);
+    writeLog(whatIDid);
     console.log(dodo);
     writeLog(dodo);
   });  
